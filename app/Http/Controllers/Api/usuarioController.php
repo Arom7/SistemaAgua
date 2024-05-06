@@ -3,15 +3,17 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cuenta;
 use Illuminate\Http\Request;
 use App\Models\Usuario;
+use Illuminate\Support\Facades\Hash;
+use App\Models\Persona;
 use Illuminate\Support\Facades\Validator;
 
 class usuarioController extends Controller
 {
     public function index(){
          $usuarios = Usuario::all();
-
          if($usuarios->isEmpty()){
             $data = [
                 'message' => 'No se encontraron usuarios',
@@ -43,21 +45,51 @@ class usuarioController extends Controller
             ];
             return response()->json($data,400);
         }
-
         try {
-            $usuario = Usuario::create([
-                'nombre' => $request->nombre,
-                'primerApellido' => $request->primerApellido,
-                'segundoApellido' => $request->segundoApellido
-            ]);
 
-            $data = [
-                'message' => 'Usuario creado exitosamente',
-                'status' => 200,
-                'usuario' => $usuario
-            ];
+            $esta_registrado = Usuario::usuarioExistente($request->nombre,$request->primerApellido,$request->segundoApellido);
+
+            if(!$esta_registrado){
+                $usuario = Usuario::create([
+                    'nombre' => $request->nombre,
+                    'primerApellido' => $request->primerApellido,
+                    'segundoApellido' => $request->segundoApellido
+                ]);
+            }
+
+            $id_usuario = Usuario::buscar_id_usuario($request->nombre,$request->primerApellido,$request->segundoApellido);
+
+            $esta_registrada_cuenta = Cuenta::cuentaExistente($request->username);
+
+            echo $esta_registrada_cuenta;
+
+            if(!$esta_registrada_cuenta){
+
+                $contrasenia_encriptada = Hash::make($request->contrasenia);
+
+                $cuenta = Cuenta::create([
+                    'username' => $request->username,
+                    'contrasenia' => $contrasenia_encriptada,
+                    'status' => true,
+                    'Persona_idpersona' => $id_usuario->idpersona
+                ]);
+
+                $data = [
+                    'message' => 'Cuenta creada exitosamente. Solo cuenta.',
+                    'status' => 200,
+                    'usuario' => $cuenta
+                ];
+            }else{
+                $data = [
+                    'message' => 'Usuario y cuenta ya registrados.',
+                    'status' => 400
+                ];
+            }
 
             return response()->json($data, 200);
+
+
+
         } catch (\Exception $e) {
             $data = [
                 'message' => 'Error al crear el usuario: ' . $e->getMessage(),
@@ -65,8 +97,6 @@ class usuarioController extends Controller
             ];
             return response()->json($data, 500);
         }
-
-
     }
 
     public function show($id){

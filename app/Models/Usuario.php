@@ -21,5 +21,26 @@ class Usuario extends Model
         'segundoApellido'
     ];
 
+    public static function usuarioExistente($nombre, $primerApellido, $segundoApellido)
+    {
+        return static::where('nombre', $nombre)
+                     ->where('primerApellido', $primerApellido)
+                     ->where('segundoApellido', $segundoApellido)
+                     ->exists();
+    }
+
+    public static function buscar_id_usuario($nombre, $primerApellido, $segundoApellido){
+        $usuario = static::where('nombre', $nombre)
+                     ->where('primerApellido', $primerApellido)
+                     ->where('segundoApellido', $segundoApellido)
+                     ->select('idpersona')
+                     ->first();
+        return $usuario;
+    }
+
+    public function usuarios()
+    {
+        return $this->hasMany(Usuario::class, 'idpersona');
+    }
 
 }

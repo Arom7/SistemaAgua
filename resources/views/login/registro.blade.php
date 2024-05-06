@@ -15,7 +15,7 @@
         <div class="shape"></div>
         <div class="shape"></div>
     </div>
-    <form>
+    <form id="formRegistro">
         <h3>Login Here</h3>
 
         <label for="Nombre">Nombre</label>
@@ -33,7 +33,29 @@
         <label for="password">Password</label>
         <input type="password" placeholder="Password" id="password">
 
-        <button>Registrarse</button>
+        <button type="submit">Registrarse</button>
     </form>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('#formulario').submit(function(event) {
+            event.preventDefault();
+            var formData = $(this).serialize(); // Obtener los datos del formulario
+
+            $.ajax({
+                url: "{{ route('ruta.de.tu.api') }}",
+                type: "POST",
+                data: formData,
+                success: function(response) {
+                    console.log(response); // Manejar la respuesta de la API
+                    window.location.href = 'index.php'; // Redirigir a la página index.php
+                },
+                error: function(xhr, status, error) {
+                    console.error(error); // Manejar los errores
+                }
+            });
+        });
+    });
+    </script>
 </html>
