@@ -43,7 +43,7 @@ class usuarioController extends Controller
                 'status' => 400,
                 'errores' => $validacion -> errors()
             ];
-            return response()->json($data,400);
+            return response()->json($data,200);
         }
         try {
 
@@ -61,8 +61,6 @@ class usuarioController extends Controller
 
             $esta_registrada_cuenta = Cuenta::cuentaExistente($request->username);
 
-            echo $esta_registrada_cuenta;
-
             if(!$esta_registrada_cuenta){
 
                 $contrasenia_encriptada = Hash::make($request->contrasenia);
@@ -79,16 +77,14 @@ class usuarioController extends Controller
                     'status' => 200,
                     'usuario' => $cuenta
                 ];
+                return response()->json($data, 200);
             }else{
                 $data = [
                     'message' => 'Usuario y cuenta ya registrados.',
                     'status' => 400
                 ];
+                return response()->json($data, 200);
             }
-
-            return response()->json($data, 200);
-
-
 
         } catch (\Exception $e) {
             $data = [
