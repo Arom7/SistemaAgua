@@ -16,12 +16,11 @@ class Cuenta extends Model
         'contrasenia',
         'status',
         'username',
-        'Persona_idpersona'
     ];
 
     public function persona()
     {
-        return $this->belongsTo(Usuario::class, 'idpersona');
+        return $this->belongsTo(Socio::class, 'id');
     }
 
     public static function cuentaExistente($username)

@@ -3,18 +3,18 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Cuenta;
-use Illuminate\Http\Request;
 use App\Models\Usuario;
+use Illuminate\Http\Request;
+use App\Models\Socio;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Persona;
 use Illuminate\Support\Facades\Validator;
 
-class usuarioController extends Controller
+class socioController extends Controller
 {
     public function index(){
-         $usuarios = Usuario::all();
-         if($usuarios->isEmpty()){
+         $socios = Socio::all();
+         if($socios->isEmpty()){
             $data = [
                 'message' => 'No se encontraron usuarios',
                 'status' => 400,
@@ -23,7 +23,7 @@ class usuarioController extends Controller
             $data = [
                 'message' => 'Usuarios encontrados',
                 'status' => 200,
-                'usuarios' => $usuarios
+                'usuarios' => $socios
             ];
          }
          return response()->json($data,200);
@@ -32,14 +32,15 @@ class usuarioController extends Controller
     public function store (Request $request)
     {
         $validacion = Validator::make($request->all(),[
-            'nombre' => 'required', 'string', 'regex:/^(?!\s)(?!.*\s$)[a-zA-Z\s]*[a-zA-Z]+[a-zA-Z\s]*$/','max:45',
-            'primerApellido' => 'required', 'string' , 'regex:/^[a-zA-Z]+$/' ,'max:45',
-            'segundoApellido' => 'nullable','string', 'regex:/^[a-zA-Z]+$/','max:45'
+            'nombre' => 'required', 'string', 'regex:/^(?!\s)(?!.*\s$)[a-zA-Z\s]*[a-zA-Z]+[a-zA-Z\s]*$/','max:85',
+            'primer_apellido' => 'required', 'string' , 'regex:/^[a-zA-Z]+$/' ,'max:85',
+            'segundo_apellido' => 'nullable','string', 'regex:/^[a-zA-Z]+$/','max:85',
+            'ci' => 'required', 'string' , 'regex: /^[a-zA-Z0-9]+$/', 'max:40'
         ]);
 
         if ($validacion -> fails()){
             $data = [
-                'message' => 'Error en la validacion de datos',
+                'message' => 'Error, al validar datos',
                 'status' => 400,
                 'errores' => $validacion -> errors()
             ];
@@ -47,29 +48,29 @@ class usuarioController extends Controller
         }
         try {
 
-            $esta_registrado = Usuario::usuarioExistente($request->nombre,$request->primerApellido,$request->segundoApellido);
+            $esta_registrado = Socio::usuarioExistente($request->nombre,$request->primer_apellido,$request->segundo_apellido);
 
             if(!$esta_registrado){
-                $usuario = Usuario::create([
-                    'nombre' => $request->nombre,
-                    'primerApellido' => $request->primerApellido,
-                    'segundoApellido' => $request->segundoApellido
+                $socio = Socio::create([
+                    'nombre_socio' => $request->nombre,
+                    'primer_apellido_socio' => $request->primer_apellido,
+                    'segundo_apellido_socio' => $request->segundo_apellido,
+                    'ci_socio' => $request->ci
                 ]);
             }
 
-            $id_usuario = Usuario::buscar_id_usuario($request->nombre,$request->primerApellido,$request->segundoApellido);
-
-            $esta_registrada_cuenta = Cuenta::cuentaExistente($request->username);
+            $esta_registrada_cuenta = Usuario::cuentaExistente($request->username);
 
             if(!$esta_registrada_cuenta){
 
+                $id_usuario = Socio::buscar_id_usuario($request->nombre,$request->primer_apellido,$request->segundo_apellido);
                 $contrasenia_encriptada = Hash::make($request->contrasenia);
 
-                $cuenta = Cuenta::create([
+                $cuenta = Usuario::create([
                     'username' => $request->username,
                     'contrasenia' => $contrasenia_encriptada,
-                    'status' => true,
-                    'Persona_idpersona' => $id_usuario->idpersona
+                    'email' => $request->email,
+                    'socio_id' => $id_usuario->id
                 ]);
 
                 $data = [
@@ -96,7 +97,7 @@ class usuarioController extends Controller
     }
 
     public function show($id){
-        $usuario = Usuario::find($id);
+        $usuario = Socio::find($id);
 
         if(!$usuario){
             $data = [
@@ -115,7 +116,7 @@ class usuarioController extends Controller
     }
 
     public function destroy($id){
-        $usuario = Usuario::find($id);
+        $usuario = Socio::find($id);
 
         if(!$usuario){
             $data = [
@@ -137,7 +138,7 @@ class usuarioController extends Controller
 
     public function update (Request $request,$id){
 
-        $usuario = Usuario::find($id);
+        $usuario = Socio::find($id);
 
         if(!$usuario){
             $data = [
@@ -180,7 +181,7 @@ class usuarioController extends Controller
 
     public function update_parcial(Request $request, $id){
 
-        $usuario = Usuario::find($id);
+        $usuario = Socio::find($id);
 
         if(!$usuario){
             $data = [

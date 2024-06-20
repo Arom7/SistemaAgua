@@ -1,8 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\cuentaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\usuarioController;
+use App\Http\Controllers\Api\socioController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,16 +19,24 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+//Ruta para las funciones del usuario
+
 // Devuelve a los usuarios
-Route::get('/usuarios',[usuarioController::class, 'index']);
+Route::get('/usuarios',[socioController::class, 'index']);
 
 // Devuelve un solo usuario con su id
-Route::get('/usuarios/{id}',[usuarioController::class,'show']);
+Route::get('/usuarios/{id}',[socioController::class,'show']);
 
-Route::post('/usuarios',[usuarioController::class, 'store']);
+Route::post('/usuarios',[socioController::class, 'store']);
 
-Route::put('/usuarios/{id}',[usuarioController::class, 'update']);
+Route::put('/usuarios/{id}',[socioController::class, 'update']);
 
-Route::patch('/usuarios/{id}',[usuarioController::class, 'update_parcial']);
+Route::patch('/usuarios/{id}',[socioController::class, 'update_parcial']);
 
-Route::delete('usuarios/{id}', [usuarioController::class, 'destroy']);
+Route::delete('usuarios/{id}', [socioController::class, 'destroy']);
+
+
+/* Rutas para la cuenta
+   # Ingreso a login
+*/
+Route:: post('/login',[cuentaController::class, 'login']);

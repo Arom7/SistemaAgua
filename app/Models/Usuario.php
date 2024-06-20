@@ -1,46 +1,56 @@
 <?php
 
-//Los modelos son como volver a realizar una base de datos, aca tenemos que establecer relaciones en como esta armado la base de datos, debe estar igual
 namespace App\Models;
 
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
-class Usuario extends Model
+class Usuario extends Authenticatable
 {
-    use HasFactory;
+    use HasApiTokens, HasFactory, Notifiable;
 
-    protected $primaryKey = 'idpersona';
+    protected $primaryKey = 'username';
 
-    protected $table = 'persona';
-
-    //podemos definir que datos pueden ser alterados
+    protected $table = 'usuarios';
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
     protected $fillable = [
-        'nombre',
-        'primerApellido',
-        'segundoApellido'
+        'username',
+        'email',
+        'contrasenia',
+        'socio_id',
     ];
 
-    public static function usuarioExistente($nombre, $primerApellido, $segundoApellido)
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'contrasenia',
+        'remember_token',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'contrasenia' => 'hashed',
+    ];
+
+
+    public static function cuentaExistente($username)
     {
-        return static::where('nombre', $nombre)
-                     ->where('primerApellido', $primerApellido)
-                     ->where('segundoApellido', $segundoApellido)
+        return static::where('username', $username)
                      ->exists();
     }
-
-    public static function buscar_id_usuario($nombre, $primerApellido, $segundoApellido){
-        $usuario = static::where('nombre', $nombre)
-                     ->where('primerApellido', $primerApellido)
-                     ->where('segundoApellido', $segundoApellido)
-                     ->select('idpersona')
-                     ->first();
-        return $usuario;
-    }
-
-    public function usuarios()
-    {
-        return $this->hasMany(Usuario::class, 'idpersona');
-    }
-
 }
