@@ -22,6 +22,27 @@ class Socio extends Model
         'ci_socio',
     ];
 
+    // Relacion socio -> usuarios (un socio tiene muchos usuarios)
+    public function usuarios()
+    {
+        return $this->hasMany(Usuario::class, 'socio_id');
+    }
+
+    // Relacion socio->propiedad (un socio tiene muchas propiedades)
+    public function propiedades(){
+        return $this->hasMany(Propiedad::class,'socio_id');
+    }
+
+    // Relacion socio->telefono (un socio puede tener muchos telefonos)
+    public function telefonos() {
+        return $this->hasMany(Telefono::class, 'socio_id' , 'id');
+    }
+
+    // Relacion socio -- otb (un socio pertenece a una otb)
+    public function otb() {
+        return $this->belongsTo(Otb::class,'otb_id');
+    }
+
     public static function usuarioExistente($nombre, $primerApellido, $segundoApellido)
     {
         return static::where('nombre_socio', $nombre)
@@ -31,17 +52,10 @@ class Socio extends Model
     }
 
     public static function buscar_id_usuario($nombre, $primerApellido, $segundoApellido){
-        $socio = static::where('nombre_socio', $nombre)
+        return static::where('nombre_socio', $nombre)
                      ->where('primer_apellido_socio', $primerApellido)
                      ->where('segundo_apellido_socio', $segundoApellido)
                      ->select('id')
                      ->first();
-        return $socio;
     }
-
-    public function usuarios()
-    {
-        return $this->hasMany(Usuario::class, 'socio_id');
-    }
-
 }

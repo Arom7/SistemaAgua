@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('socios',function(Blueprint $table){
+        Schema::create('otbs', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre_socio');
-            $table->string('primer_apellido_socio');
-            $table->string('segundo_apellido_socio')->nullable();
-            $table->string('ci_socio');
+            $table->string('nombre_comunidad');
+            $table->string('direccion');
             $table->timestamps();
         });
     }
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('otbs');
     }
 };

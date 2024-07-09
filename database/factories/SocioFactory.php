@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Otb;
 use App\Models\Socio;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -29,7 +30,8 @@ class SocioFactory extends Factory
             'nombre_socio' => $this->faker->name,
             'primer_apellido_socio' => $this->faker->lastName,
             'segundo_apellido_socio' => $this->faker->lastName,
-            'ci_socio' => $this->faker->numerify('#########')
+            'ci_socio' => $this->faker->numerify('#########'),
+            'otb_id' => Otb::first()->id
         ];
     }
 }

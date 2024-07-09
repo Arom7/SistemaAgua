@@ -1,8 +1,7 @@
 <?php
 
 namespace App\Models;
-
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -47,6 +46,10 @@ class Usuario extends Authenticatable
         'contrasenia' => 'hashed',
     ];
 
+    // Relacion rol <--> usuario (Un usuario puede tener muchos roles / Relacion muchos a muchos)
+    public function roles() {
+        return $this->belongsToMany(Rol::class,'usuarios_roles','usuario_id','rol_id');
+    }
 
     public static function cuentaExistente($username)
     {

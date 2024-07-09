@@ -11,16 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('usuarios', function (Blueprint $table) {
+        Schema::create('propiedades', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('socio_id');
-            $table->string('username');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('contrasenia');
-            $table->rememberToken();
+            $table->string('cuadra_propiedad');
+            $table->double('total_multas_propiedad');
+            $table->string('descripcion_propiedad')->nullable();
             $table->timestamps();
-
-            $table->primary('username');
 
             $table->foreign('socio_id')
                 ->references('id')->on('socios')
@@ -33,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('usuarios');
+        Schema::dropIfExists('propiedades');
     }
 };
