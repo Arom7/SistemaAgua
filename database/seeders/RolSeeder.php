@@ -2,20 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\Socio;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use App\Models\Rol;
 
-class SocioSeeder extends Seeder
+class RolSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        DB::table('socios')->truncate();
-
-        Socio::factory()->count(10)->create();
+        Rol::factory()->count(5)->create();
     }
 }

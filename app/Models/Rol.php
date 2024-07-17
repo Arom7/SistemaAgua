@@ -7,12 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Rol extends Model
 {
+    use HasFactory;
+
     protected $primaryKey = 'idRol';
     protected $table = 'roles';
 
     //
     protected $fillable= [
-        'idRol',
         'nombre_rol',
         'descripcion'
     ];

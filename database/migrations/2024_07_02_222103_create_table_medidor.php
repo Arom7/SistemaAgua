@@ -12,13 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('medidores', function (Blueprint $table) {
-            $table->unsignedBigInteger('propiedad_id')->primary();
+            $table->unsignedBigInteger('propiedad_id_medidor')->primary();
             $table->integer('id_medidor')->unique();
             $table->integer('medida_inicial');
             $table->integer('ultima_medida');
-            $table->unsignedBigInteger('propiedades');
 
-            $table->foreign('propiedad_id')
+            $table->foreign('propiedad_id_medidor')
             ->references('id')->on('propiedades')
             ->onDelete('cascade');
             $table->timestamps();

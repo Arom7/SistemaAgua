@@ -2,14 +2,16 @@
 
 namespace Database\Factories;
 
+use App\Models\Propiedad;
 use App\Models\Socio;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Telefono>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Propiedad>
  */
-class TelefonoFactory extends Factory
+class PropiedadFactory extends Factory
 {
+    protected $model = Propiedad::class;
     /**
      * Define the model's default state.
      *
@@ -24,8 +26,10 @@ class TelefonoFactory extends Factory
         }
 
         return [
-            'socio_id_telefono' =>$socio->id,
-            'numero_telefonico' => $this->faker->numerify('########'),
+            'socio_id' => $socio->id ,
+            'cuadra_propiedad' => $this->faker->address ,
+            'total_multas_propiedad'=> $this->faker->randomFloat(2, 1, 100),
+            'descripcion_propiedad' => $this->faker->sentence,
         ];
     }
 }

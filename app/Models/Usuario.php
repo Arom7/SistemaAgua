@@ -12,7 +12,8 @@ class Usuario extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     protected $primaryKey = 'username';
-
+    public $incrementing = false;
+    protected $keyType = 'string';
     protected $table = 'usuarios';
     /**
      * The attributes that are mass assignable.
@@ -48,7 +49,8 @@ class Usuario extends Authenticatable
 
     // Relacion rol <--> usuario (Un usuario puede tener muchos roles / Relacion muchos a muchos)
     public function roles() {
-        return $this->belongsToMany(Rol::class,'usuarios_roles','usuario_id','rol_id');
+        return $this->belongsToMany(Rol::class,'usuarios_roles','usuario_id','rol_id')
+                    ->withTimestamps();
     }
 
     public static function cuentaExistente($username)

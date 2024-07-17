@@ -13,14 +13,13 @@ class Consumo extends Model
     protected $primaryKey = 'propiedad_id';
 
     protected $fillable = [
-        'propiedad_id',
         'consumo_total',
         'mes_correspondiente'
     ];
 
     // Relacion Consumo -- Medidor (Un consumo corresponde a un medidor)
     public function  consumos() {
-        return $this->belongsTo(Medidor::class , 'propiedad_id');
+        return $this->belongsTo(Medidor::class , 'propiedad_id', 'propiedad_id');
     }
 
     public function recibos(){

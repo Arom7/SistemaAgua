@@ -21,16 +21,18 @@ class Propiedad extends Model
 
     // Relacion propiedad -- socio (Una propiedad pertenece a un socio)
     public function socio(){
-        return $this->belongsTo(Socio::class);
+        return $this->belongsTo(Socio::class,'socio_id','id');
     }
 
     // Relacion propiedad <-> multas (Una propiedad puede tener muchas multas / Relacion muchos a muchos)
-    public function infracciones(){
-        return $this->belongsToMany(Infraccion::class , 'propiedades_multas' , 'propiedad_id' , 'infraccion_id');
+    public function multas(){
+        return $this->belongsToMany(Multa::class , 'propiedades_multas' , 'propiedad_id' , 'infraccion_id')
+                    ->withPivot('fecha_multa','estado_pago')
+                    ->withTimestamps();
     }
 
     // Relacion propiedad -> medidores (Una propiedad puede tener muchos medidores)
     public function medidores() {
-        return $this->hasMany(Medidor::class , 'propiedad_id');
+        return $this->hasMany(Medidor::class,'propiedad_id_medidor','id');
     }
 }

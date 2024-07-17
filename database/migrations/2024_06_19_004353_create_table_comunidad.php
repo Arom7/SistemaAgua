@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('otbs', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre_comunidad');
-            $table->string('direccion');
+            $table->string('nombre_comunidad_otb');
+            $table->string('direccion_otb');
             $table->timestamps();
         });
     }

@@ -3,6 +3,11 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Otb;
+use App\Models\Rol;
+use App\Models\Socio;
+use App\Models\Usuario;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,11 +17,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        $this->call([
+            /*
+            OtbSeeder::class,
+            SocioSeeder::class,
+            TelefonoSeeder::class,
+            UsuarioSeeder::class,
+            RolSeeder::class,
+            */
+            // Tabla intermedia Rol >--< Usuario
+            //UsuarioRolSeeder::class,
+            PropiedadSeeder::class
+        ]);
     }
 }

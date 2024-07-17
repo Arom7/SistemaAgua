@@ -14,7 +14,6 @@ class Recibo extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'id',
         'estado_pago',
         'total',
         'fecha_lectura',
@@ -23,6 +22,6 @@ class Recibo extends Model
 
     // Relacion recibo -- consumo (Relacion uno a uno)
     public function consumos(){
-        return $this->belongsTo(Consumo::class, 'propiedad_id' , 'propiedad_id');
+        return $this->belongsTo(Consumo::class, 'propiedad_id_recibo' , 'propiedad_id_consumo');
     }
 }

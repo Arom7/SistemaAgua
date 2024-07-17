@@ -13,8 +13,7 @@ class Medidor extends Model
     protected $primaryKey = 'propiedad_id';
 
     protected $fillable= [
-        'id_medidor',
-        'propiedad_id',
+        'propiedad_id_medidor',
         'medida_inicial',
         'ultima_medida',
         'propiedades'
@@ -22,12 +21,12 @@ class Medidor extends Model
 
     // Relacion medidores <-- propiedades (Uno a muchos)
     public function propiedades (){
-        return $this->belongsTo(Propiedad:: class, 'propiedad_id');
+        return $this->belongsTo(Propiedad:: class, 'propiedad_id_medidor', 'id');
     }
 
     // Relacion medidores --> consumos (Uno a muchos)
     public function consumos(){
-        return $this->hasMany(Consumo::class, 'propiedad_id');
+        return $this->hasMany(Consumo::class, 'propiedad_id_consumo' ,'propiedad_id_medidor');
     }
 
 }

@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('telefonos', function (Blueprint $table) {
             $table->id('id_telefono');
             $table->integer('numero_telefonico')->nullable();
-            $table->unsignedBigInteger('socio_id');
+            $table->unsignedBigInteger('socio_id_telefono');
 
-            $table->foreign('socio_id')
+            $table->foreign('socio_id_telefono')
                 ->references('id')->on('socios')
                 ->onDelete('cascade');
 

@@ -25,22 +25,22 @@ class Socio extends Model
     // Relacion socio -> usuarios (un socio tiene muchos usuarios)
     public function usuarios()
     {
-        return $this->hasMany(Usuario::class, 'socio_id');
+        return $this->hasMany(Usuario::class, 'socio_id','id');
     }
 
     // Relacion socio->propiedad (un socio tiene muchas propiedades)
     public function propiedades(){
-        return $this->hasMany(Propiedad::class,'socio_id');
+        return $this->hasMany(Propiedad::class,'socio_id','id');
     }
 
     // Relacion socio->telefono (un socio puede tener muchos telefonos)
     public function telefonos() {
-        return $this->hasMany(Telefono::class, 'socio_id' , 'id');
+        return $this->hasMany(Telefono::class, 'socio_id_telefono','id');
     }
 
     // Relacion socio -- otb (un socio pertenece a una otb)
     public function otb() {
-        return $this->belongsTo(Otb::class,'otb_id');
+        return $this->belongsTo(Otb::class,'otb_id','id');
     }
 
     public static function usuarioExistente($nombre, $primerApellido, $segundoApellido)

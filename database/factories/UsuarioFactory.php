@@ -20,8 +20,14 @@ class UsuarioFactory extends Factory
      */
     public function definition(): array
     {
+        $socio = Socio::inRandomOrder()->first();
+
+        if(!$socio){
+            $socio = Socio::factory()->create();
+        }
+
         return [
-            'socio_id' => Socio::inRandomOrder()->first()->id,
+            'socio_id_usuario' => $socio->id,
             'username' => $this->generateUniqueUsername(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),

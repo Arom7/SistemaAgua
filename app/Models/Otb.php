@@ -14,12 +14,13 @@ class Otb extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'nombre_comunidad',
+        'nombre_comunidad_otb',
         'direccion',
     ];
 
     // Relacion Otb -> socios (una OTB tiene muchos socios)
     public function socios() {
-        return $this->hasMany( Socio::class , 'socio_id');
+        //Otb esta relacionado uno a muchos con socios, llave foranea de Socio, llave primaria de Otb
+        return $this->hasMany(Socio::class,'otb_id','id');
     }
 }

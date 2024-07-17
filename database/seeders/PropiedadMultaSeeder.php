@@ -2,20 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\Socio;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use App\Models\PropiedadMulta;
 
-class SocioSeeder extends Seeder
+class PropiedadMultaSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        DB::table('socios')->truncate();
-
-        Socio::factory()->count(10)->create();
+        PropiedadMulta::factory()->count(10)->create();
     }
 }

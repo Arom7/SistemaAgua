@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -13,8 +14,8 @@ return new class extends Migration
     {
         Schema::create('propiedades_multas', function (Blueprint $table) {
             $table->id();
-            $table->date('fecha_multa');
-            $table->boolean('estado_pago');
+            $table->timestamp('fecha_multa')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->boolean('estado_pago')->default(false);
             $table->unsignedBigInteger('propiedad_id');
             $table->unsignedBigInteger('infracion_id');
 
