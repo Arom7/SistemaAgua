@@ -19,10 +19,10 @@ class Consumo extends Model
 
     // Relacion Consumo -- Medidor (Un consumo corresponde a un medidor)
     public function  consumos() {
-        return $this->belongsTo(Medidor::class , 'propiedad_id', 'propiedad_id');
+        return $this->belongsTo(Medidor::class , 'propiedad_id_medidor', 'propiedad_id_consumo');
     }
 
     public function recibos(){
-        return $this-> hasOne(Recibo::class, 'propiedad_id' , 'propiedad_id');
+        return $this-> hasOne(Recibo::class, 'id_consumo_recibo' , 'propiedad_id_consumo');
     }
  }

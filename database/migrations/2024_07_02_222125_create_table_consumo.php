@@ -12,9 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('consumos', function (Blueprint $table) {
-            $table->unsignedBigInteger('propiedad_id_consumo')->primary();
+            $table->id('id_consumo');
             $table->integer('consumo_total');
             $table->date('mes_correspondiente');
+            $table->unsignedBigInteger('propiedad_id_consumo');
             $table->timestamps();
 
             $table->foreign('propiedad_id_consumo')

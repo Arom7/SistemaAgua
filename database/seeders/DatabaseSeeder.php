@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Otb;
+use App\Models\Recibo;
 use App\Models\Rol;
 use App\Models\Socio;
 use App\Models\Usuario;
@@ -18,16 +19,21 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            /*
+
             OtbSeeder::class,
             SocioSeeder::class,
             TelefonoSeeder::class,
             UsuarioSeeder::class,
             RolSeeder::class,
-            */
             // Tabla intermedia Rol >--< Usuario
-            //UsuarioRolSeeder::class,
-            PropiedadSeeder::class
+            UsuarioRolSeeder::class,
+            PropiedadSeeder::class,
+            MultaSeeder::class,
+            //tabla intermedia Propiedad >--< Multa
+            PropiedadMultaSeeder::class,
+            MedidorSeeder::class,
+            ConsumoSeeder::class,
+            ReciboSeeder::class
         ]);
     }
 }

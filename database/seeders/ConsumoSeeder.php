@@ -2,18 +2,20 @@
 
 namespace Database\Seeders;
 
-use App\Models\Telefono;
+use App\Models\Consumo;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
-class TelefonoSeeder extends Seeder
+class ConsumoSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Telefono::factory()->count(25)->create();
+        Log::info('Seeder iniciado');
+        Consumo::factory()->count(55)->create();
+        Log::info('Seeder completado');
     }
 }

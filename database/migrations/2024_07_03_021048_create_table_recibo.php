@@ -17,10 +17,10 @@ return new class extends Migration
             $table->double('total');
             $table->date('fecha_lectura');
             $table->string('observaciones')->nullable();
-            $table->unsignedBigInteger('propiedad_id_recibo')->unique();
+            $table->unsignedBigInteger('id_consumo_recibo')->unique();
 
-            $table->foreign('propiedad_id_recibo')
-                ->references('propiedad_id_consumo')->on('consumos')
+            $table->foreign('id_consumo_recibo')
+                ->references('id_consumo')->on('consumos')
                 ->onDelete('cascade');
 
             $table->timestamps();

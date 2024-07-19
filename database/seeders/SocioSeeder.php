@@ -14,8 +14,6 @@ class SocioSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('socios')->truncate();
-
         Socio::factory()->count(10)->create();
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Consumo;
+use App\Models\Medidor;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,12 +18,14 @@ class ConsumoFactory extends Factory
      */
     public function definition(): array
     {
-        $fecha_aleatoria = $faker
+        $todosMedidoresPropiedades = Medidor::pluck('propiedad_id_medidor')->toArray();
+
+        $idMedidor = $this->faker->randomElement($todosMedidoresPropiedades);
 
         return [
-            'propiedad_id_consumo',
-            'consumo_total',
-            'mes_correspondiente'
+            'propiedad_id_consumo'=> $idMedidor,
+            'consumo_total' => $this->faker->numberBetween(10,100),
+            'mes_correspondiente' => $this->faker->dateTimeThisDecade()->format('Y-m-01')
         ];
     }
 }

@@ -14,7 +14,6 @@ class OtbSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('otbs')->truncate();
 
         Otb::create([
             'id' => 1,
