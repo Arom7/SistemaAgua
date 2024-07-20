@@ -21,7 +21,7 @@ class Recibo extends Model
     ];
 
     // Relacion recibo -- consumo (Relacion uno a uno)
-    public function consumos(){
-        return $this->belongsTo(Consumo::class , 'id_consumo' , 'id_consumo_recibo');
+    public function consumo(){
+        return $this->belongsTo(Consumo::class , 'id_consumo_recibo' , 'id_consumo');
     }
 }

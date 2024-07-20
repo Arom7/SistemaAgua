@@ -25,7 +25,7 @@ class Socio extends Model
     // Relacion socio -> usuarios (un socio tiene muchos usuarios)
     public function usuarios()
     {
-        return $this->hasMany(Usuario::class, 'socio_id','id');
+        return $this->hasMany(Usuario::class, 'socio_id_usuario','id');
     }
 
     // Relacion socio->propiedad (un socio tiene muchas propiedades)

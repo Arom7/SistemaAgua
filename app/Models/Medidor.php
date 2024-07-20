@@ -10,7 +10,7 @@ class Medidor extends Model
     use HasFactory;
 
     protected $table = 'medidores';
-    protected $primaryKey = 'propiedad_id';
+    protected $primaryKey = 'propiedad_id_medidor';
 
     protected $fillable= [
         'propiedad_id_medidor',
@@ -20,7 +20,7 @@ class Medidor extends Model
     ];
 
     // Relacion medidores <-- propiedades (Uno a muchos)
-    public function propiedades (){
+    public function propiedad (){
         return $this->belongsTo(Propiedad:: class, 'propiedad_id_medidor', 'id');
     }
 

@@ -24,7 +24,7 @@ class Usuario extends Authenticatable
         'username',
         'email',
         'contrasenia',
-        'socio_id',
+        'socio_id_usuario',
     ];
 
     /**
@@ -51,6 +51,10 @@ class Usuario extends Authenticatable
     public function roles() {
         return $this->belongsToMany(Rol::class,'usuarios_roles','usuario_id','rol_id')
                     ->withTimestamps();
+    }
+
+    public function socio(){
+        return $this->belongsTo(Socio::class,'socio_id_usuario','id');
     }
 
     public static function cuentaExistente($username)

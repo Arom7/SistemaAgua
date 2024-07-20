@@ -26,7 +26,7 @@ class Propiedad extends Model
 
     // Relacion propiedad <-> multas (Una propiedad puede tener muchas multas / Relacion muchos a muchos)
     public function multas(){
-        return $this->belongsToMany(Multa::class , 'propiedades_multas' , 'propiedad_id' , 'infraccion_id')
+        return $this->belongsToMany(Multa::class , 'propiedades_multas' , 'propiedad_id' , 'infracion_id')
                     ->withPivot('fecha_multa','estado_pago')
                     ->withTimestamps();
     }

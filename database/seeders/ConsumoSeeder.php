@@ -15,7 +15,7 @@ class ConsumoSeeder extends Seeder
     public function run(): void
     {
         Log::info('Seeder iniciado');
-        Consumo::factory()->count(55)->create();
+        Consumo::factory()->count(105)->create();
         Log::info('Seeder completado');
     }
 }
