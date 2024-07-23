@@ -24,6 +24,10 @@ class Usuario extends Authenticatable
         'username',
         'email',
         'contrasenia',
+
+    ];
+
+    protected $guarded = [
         'socio_id_usuario',
     ];
 

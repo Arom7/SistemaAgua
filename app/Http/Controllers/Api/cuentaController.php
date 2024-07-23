@@ -15,25 +15,31 @@ class cuentaController extends Controller
 {
     //Funcion de verificacion
     public function login(Request $request){
-        /*
-            #Inicio de validaciones
-        */
 
         $validacion = Validator::make($request->all(),[
-            'username' => 'required', 'string', 'regex:/^(?!\s)(?!.*\s$)[a-zA-Z\s]*[a-zA-Z]+[a-zA-Z\s]*$/','max:45',
-            'email' =>'required|email|unique:users,email',
-            'contrasenia' => 'required', 'string' , 'regex:/^[a-zA-Z]+$/','min:8' ,'max:255'
+            // Reglas de validacion
+            'username' => [
+                'required',
+                'string',
+                'regex:/^(?!\s)(?!.*\s$)[a-zA-Z\s]*[a-zA-Z]+[a-zA-Z\s]*$/',
+                'max:45',
+            ],
+            'contrasenia' => [
+                'required',
+                'string' ,
+                'regex:/^[a-zA-Z]+$/',
+                'min:8' ,
+                'max:255'
+            ]
         ]);
 
         if($validacion->fails()){
-            if ($validacion -> fails()){
-                $data = [
-                    'message' => 'Error en la validacion de datos',
-                    'status' => 400,
-                    'errores' => $validacion -> errors()
-                ];
-                return response()->json($data,200);
-            }
+            $data = [
+                'message' => 'Error en la validacion de datos',
+                'status' => 400,
+                'errores' => $validacion -> errors()
+            ];
+            return response()->json($data,400);
         }
 
         $username = $request->username;
@@ -54,14 +60,14 @@ class cuentaController extends Controller
                     'message' => 'Contrasenia incorrecta.',
                     'status' => 400,
                 ];
-                return response()->json($data,200);
+                return response()->json($data,400);
             }
         }else{
             $data = [
                 'message' => 'Usuario no encontrado. Registrese por favor.',
-                'status' => 400,
+                'status' => 404,
             ];
-            return response()->json($data,200);
+            return response()->json($data,404);
         }
     }
 }

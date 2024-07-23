@@ -32,10 +32,15 @@ class socioController extends Controller
     public function store (Request $request)
     {
         $validacion = Validator::make($request->all(),[
-            'nombre' => 'required', 'string', 'regex:/^(?!\s)(?!.*\s$)[a-zA-Z\s]*[a-zA-Z]+[a-zA-Z\s]*$/','max:85',
-            'primer_apellido' => 'required', 'string' , 'regex:/^[a-zA-Z]+$/' ,'max:85',
-            'segundo_apellido' => 'nullable','string', 'regex:/^[a-zA-Z]+$/','max:85',
-            'ci' => 'required', 'string' , 'regex: /^[a-zA-Z0-9]+$/', 'max:40'
+            'nombre' => ['required', 'string', 'regex:/^(?!\s)(?!.*\s$)[a-zA-Z\s]*[a-zA-Z]+[a-zA-Z\s]*$/', 'max:85'],
+            'primer_apellido' => ['required', 'string', 'regex:/^[a-zA-Z]+$/', 'max:85'],
+            'segundo_apellido' => ['nullable', 'string', 'regex:/^[a-zA-Z]+$/', 'max:85'],
+            'ci' => ['required', 'string', 'regex:/^[a-zA-Z0-9]+$/', 'max:40']
+        ], [
+            'nombre.regex' => 'Tu nombre solo puede contener letras y espacios.',
+            'primer_apellido.regex' => 'Tu primer apellido solo puede contener letras.',
+            'segundo_apellido.regex' => 'Tu segundo apellido solo puede contener letras',
+            'ci.regex' => 'El CI solo puede contener letras y números.',
         ]);
 
         if ($validacion -> fails()){
@@ -55,7 +60,8 @@ class socioController extends Controller
                     'nombre_socio' => $request->nombre,
                     'primer_apellido_socio' => $request->primer_apellido,
                     'segundo_apellido_socio' => $request->segundo_apellido,
-                    'ci_socio' => $request->ci
+                    'ci_socio' => $request->ci,
+                    'otb_id' => 1
                 ]);
             }
 
@@ -70,29 +76,35 @@ class socioController extends Controller
                     'username' => $request->username,
                     'contrasenia' => $contrasenia_encriptada,
                     'email' => $request->email,
-                    'socio_id' => $id_usuario->id
                 ]);
 
+                $cuenta->socio_id_usuario = $id_usuario;
+                $cuenta->save();
+
                 $data = [
-                    'message' => 'Cuenta creada exitosamente. Solo cuenta.',
-                    'status' => 200,
+                    'message' => 'Cuenta creada exitosamente.',
+                    'status' => 201,
                     'usuario' => $cuenta
                 ];
-                return response()->json($data, 200);
+                return response()->json($data, 201);
             }else{
                 $data = [
                     'message' => 'Usuario y cuenta ya registrados.',
-                    'status' => 400
+                    'status' => 200
                 ];
                 return response()->json($data, 200);
             }
 
-        } catch (\Exception $e) {
-            $data = [
+        } catch(\Illuminate\Database\QueryException $e){
+            return response()->json([
+                'message' => 'Error en la consulta de la base de datos: ' . $e->getMessage(),
+                'status' => 500,
+            ], 500);
+        }catch (\Exception $e) {
+            return response()->json([
                 'message' => 'Error al crear el usuario: ' . $e->getMessage(),
                 'status' => 500,
-            ];
-            return response()->json($data, 500);
+            ], 500);
         }
     }
 

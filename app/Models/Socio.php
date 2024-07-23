@@ -20,6 +20,7 @@ class Socio extends Model
         'primer_apellido_socio',
         'segundo_apellido_socio',
         'ci_socio',
+        'otb_id'
     ];
 
     // Relacion socio -> usuarios (un socio tiene muchos usuarios)
