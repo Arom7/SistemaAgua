@@ -13,20 +13,29 @@ use Illuminate\Support\Facades\Validator;
 class socioController extends Controller
 {
     public function index(){
-         $socios = Socio::all();
-         if($socios->isEmpty()){
+        try{
+            $socios = Socio::all();
+            if($socios->isEmpty()){
+                $data = [
+                    'message' => 'No se encontraron usuarios',
+                    'status' => 400,
+                ];
+                return response()->json($data , 404);
+            }else{
+                $data = [
+                    'message' => 'Usuarios encontrados',
+                    'status' => 200,
+                    'usuarios' => $socios
+                ];
+                return response()->json($data,200);
+            }
+        }catch (\Exception $e){
             $data = [
-                'message' => 'No se encontraron usuarios',
-                'status' => 400,
+                'message' => 'Error al obtener los usuarios: '.$e->getMessage(),
+                'status' => 500
             ];
-         }else{
-            $data = [
-                'message' => 'Usuarios encontrados',
-                'status' => 200,
-                'usuarios' => $socios
-            ];
-         }
-         return response()->json($data,200);
+            return response($data, 500);
+        }
     }
 
     public function store (Request $request)

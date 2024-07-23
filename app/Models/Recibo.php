@@ -14,10 +14,14 @@ class Recibo extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'estado_pago',
         'total',
         'fecha_lectura',
         'observaciones'
+    ];
+
+    protected $guarded = [
+        'estado_pago',
+        'id_consumo_recibo'
     ];
 
     // Relacion recibo -- consumo (Relacion uno a uno)

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Recibo;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
 class reciboController extends Controller
@@ -12,7 +14,29 @@ class reciboController extends Controller
      */
     public function index()
     {
-        //
+        try{
+            $recibos = Recibo::all();
+            if ($recibos->isEmpty()){
+                $data = [
+                    'message' => 'No se encontraron recibos',
+                    'status' => 400
+                ];
+                return response()->json($data,404);
+            }else{
+                $data = [
+                    'message' => 'Solicitud aceptada .Recibos encontrados',
+                    'status' => 200,
+                    'recibos' => $recibos
+                ];
+                return response()->json($data, 200);
+            }
+        }catch (\Exception $e){
+            $data = [
+                'message' => 'Error al obtener los recibos: '.$e->getMessage(),
+                'status' => 500
+            ];
+            return response()->json($data, 500);
+        }
     }
 
     /**
@@ -20,7 +44,12 @@ class reciboController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validacion =  Validator::make($request->all(),[
+            'total' => ['required', 'regex:/^\d+(\.\d{1,2})?$/'],
+            '' => ['' , '']
+        ],[
+            'total.regex'=> 'El total debe ser un numero decimal'
+        ]);
     }
 
     /**
