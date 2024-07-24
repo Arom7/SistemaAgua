@@ -44,11 +44,25 @@ class reciboController extends Controller
      */
     public function store(Request $request)
     {
-        $validacion =  Validator::make($request->all(),[
-            'total' => ['required', 'regex:/^\d+(\.\d{1,2})?$/'],
-            '' => ['' , '']
+        /**
+         * Se realiza el llamado a la funcion de busqueda
+         */
+
+        $validacionConsumo = Validator::make($request->all(), [
+            'mes_correspondiente' => ['required', 'date'],
+            'lectura_actual'=> ['required', 'integer']
         ],[
-            'total.regex'=> 'El total debe ser un numero decimal'
+            'lectura_actual.integer' => 'El campo debe ser un numero entero'
+        ]);
+        // formulario validacion
+
+        $validacionRecibo =  Validator::make($request->all(),[
+            'total' => ['required', 'regex:/^\d+(\.\d{1,2})?$/'],
+            'fecha_lectura' => ['required' , 'date'],
+            'observaciones' => ['','regex:/^[a-zA-Z0-9]+$/']
+        ],[
+            'total.regex'=> 'El total debe ser un numero decimal',
+            'observaciones.regex' => 'Solo puedes ingresar letras y numeros.'
         ]);
     }
 

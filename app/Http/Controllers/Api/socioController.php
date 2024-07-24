@@ -41,15 +41,26 @@ class socioController extends Controller
     public function store (Request $request)
     {
         $validacion = Validator::make($request->all(),[
+            // Validaciones a datos a socios
             'nombre' => ['required', 'string', 'regex:/^(?!\s)(?!.*\s$)[a-zA-Z\s]*[a-zA-Z]+[a-zA-Z\s]*$/', 'max:85'],
             'primer_apellido' => ['required', 'string', 'regex:/^[a-zA-Z]+$/', 'max:85'],
             'segundo_apellido' => ['nullable', 'string', 'regex:/^[a-zA-Z]+$/', 'max:85'],
-            'ci' => ['required', 'string', 'regex:/^[a-zA-Z0-9]+$/', 'max:40']
+            'ci' => ['required', 'string', 'regex:/^[a-zA-Z0-9]+$/', 'max:40'],
+            // Validaciones a datos de usuario
+            'username' => ['required', 'string' , 'regex:/^[a-zA-Z0-9]+$/', 'min: 6', 'max:15'],
+            'email' => ['required', 'email', 'unique:usuarios,email'],
+            'contrasenia' => ['required', 'string' , 'regex:/^[\w\s!@#$%^&*()_+\-=\[\]{};:"\\|,.<>\/?~`]+$/' , 'min:8']
         ], [
             'nombre.regex' => 'Tu nombre solo puede contener letras y espacios.',
             'primer_apellido.regex' => 'Tu primer apellido solo puede contener letras.',
             'segundo_apellido.regex' => 'Tu segundo apellido solo puede contener letras',
             'ci.regex' => 'El CI solo puede contener letras y números.',
+            'username.regex' => 'Su username debe contener solo letras mayusculas o minusculas ademas de numeros.',
+            'email.email' => 'El campo debe ser una direccion electronica valida',
+            'email.unique' => 'El correo ya se encuentra registrado.',
+            'contrasenia.regex' => ' Combinar entre mayusculas, minusculas
+            numeros y caracteres especiales.',
+            'contrasenia.min' => 'La contrasenia debe contener al menos 8 caracteres.'
         ]);
 
         if ($validacion -> fails()){

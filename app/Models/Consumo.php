@@ -13,8 +13,12 @@ class Consumo extends Model
     protected $primaryKey = 'propiedad_id_consumo';
 
     protected $fillable = [
-        'consumo_total',
+        'lectura_actual',
         'mes_correspondiente'
+    ];
+
+    protected $guarded = [
+        'consumo_total'
     ];
 
     // Relacion Consumo -- Medidor (Un consumo corresponde a un medidor)
