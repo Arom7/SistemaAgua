@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class Usuario extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     protected $primaryKey = 'username';
     public $incrementing = false;
@@ -50,12 +51,6 @@ class Usuario extends Authenticatable
         'email_verified_at' => 'datetime',
         'contrasenia' => 'hashed',
     ];
-
-    // Relacion rol <--> usuario (Un usuario puede tener muchos roles / Relacion muchos a muchos)
-    public function roles() {
-        return $this->belongsToMany(Rol::class,'usuarios_roles','usuario_id','rol_id')
-                    ->withTimestamps();
-    }
 
     public function socio(){
         return $this->belongsTo(Socio::class,'socio_id_usuario','id');
