@@ -559,8 +559,7 @@ pre code {
   padding-left: 0.75rem;
   margin-right: auto;
   margin-left: auto;
-  margin-top: 10%;
-  margin-bottom: auto;
+  padding-top: 5%;
 }
 
 @media (min-width: 576px) {
@@ -2340,6 +2339,10 @@ textarea.form-control {
 .btn-ingreso{
     color: #EEEEEE;
     background-color: #134B70;
+}
+
+.btn-busqueda{
+    background-color: #508C9B;
 }
 
 .btn:hover {
@@ -9808,7 +9811,7 @@ a:focus {
 }
 
 #wrapper #content-wrapper {
-  background-color: #f8f9fc;
+  background-color: #EEEEEE;
   width: 100%;
   overflow-x: hidden;
 }
@@ -11279,13 +11282,27 @@ form.user .btn-user {
   animation: noise-anim-2 3s infinite linear alternate-reverse;
 }
 
+footer{
+    position: static;
+    background-color: #508C9B;
+}
+
+#container-footer{
+    width: 100%;
+    height: 100%;
+    margin-bottom: 0%;
+    padding-right: 0.75rem;
+    padding-left: 0.75rem;
+    margin-right: auto;
+    margin-left: auto;
+}
+
 footer.sticky-footer {
-  padding: 2rem 0;
+  padding: 1rem 0;
   flex-shrink: 0;
 }
 
 footer.sticky-footer .copyright {
-  line-height: 1;
   font-size: 0.8rem;
 }
 

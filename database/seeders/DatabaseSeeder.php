@@ -15,10 +15,10 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            //OtbSeeder::class,
-            //SocioSeeder::class,
-            //TelefonoSeeder::class,
-            //UsuarioSeeder::class,
+            OtbSeeder::class,
+            SocioSeeder::class,
+            TelefonoSeeder::class,
+            UsuarioSeeder::class,
             // Tabla intermedia Rol >--< Usuario
             PropiedadSeeder::class,
             MultaSeeder::class,

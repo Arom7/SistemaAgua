@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
 use App\Models\Socio;
 use Illuminate\Support\Facades\Hash;
-use App\Models\Persona;
 use Illuminate\Support\Facades\Validator;
 
 class socioController extends Controller
@@ -17,24 +16,25 @@ class socioController extends Controller
             $socios = Socio::all();
             if($socios->isEmpty()){
                 $data = [
-                    'message' => 'No se encontraron usuarios',
+                    'message' => 'No se encontraron socios registrados',
                     'status' => 400,
                 ];
-                return response()->json($data , 404);
             }else{
                 $data = [
-                    'message' => 'Usuarios encontrados',
+                    'message' => 'Socios encontrados',
                     'status' => 200,
                     'usuarios' => $socios
                 ];
-                return response()->json($data,200);
             }
+            //Retornamos la vista con la lista de socios
+            //return view();
         }catch (\Exception $e){
             $data = [
                 'message' => 'Error al obtener los usuarios: '.$e->getMessage(),
                 'status' => 500
             ];
-            return response($data, 500);
+            //Retornamos la vista con error
+            //return view();
         }
     }
 
@@ -50,7 +50,7 @@ class socioController extends Controller
                 // Validaciones a datos de usuario
                 'username' => ['required', 'string' , 'regex:/^[a-zA-Z0-9]+$/', 'min: 6', 'max:15'],
                 'email' => ['required', 'email', 'unique:usuarios,email'],
-                'contrasenia' => ['required', 'string' , 'regex:/^[\w\s!@#$%^&*()_+\-=\[\]{};:"\\|,.<>\/?~`]+$/' , 'min:8']
+                'contrasenia' => ['required', 'string' , 'regex:/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$']
             ], [
                 'nombre.regex' => 'Tu nombre solo puede contener letras y espacios.',
                 'primer_apellido.regex' => 'Tu primer apellido solo puede contener letras.',
@@ -59,9 +59,7 @@ class socioController extends Controller
                 'username.regex' => 'Su username debe contener solo letras mayusculas o minusculas ademas de numeros.',
                 'email.email' => 'El campo debe ser una direccion electronica valida',
                 'email.unique' => 'El correo ya se encuentra registrado.',
-                'contrasenia.regex' => ' Combinar entre mayusculas, minusculas
-                numeros y caracteres especiales.',
-                'contrasenia.min' => 'La contrasenia debe contener al menos 8 caracteres.'
+                'contrasenia.regex' => 'La contrasenia debe contener al menos una mayuscula, una minuscula, un numero, un caracter especial y una longitud minima de 8 caracteres'
             ]);
 
             if ($validacion -> fails()){

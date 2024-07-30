@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\cuentaController;
 use Illuminate\Support\Facades\Route;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,10 +15,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Ruta a la raiz
 Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/registro', function () {
-    return view('login/registro');
-});
+// Redireccionamiento a ruta dashboard
+Route::get('/home', function() {
+    return view('dashboard');
+})->name('inicio');
+
+Route::post('/login', [cuentaController::class, 'login'])->name('login.usuario');
+
+
+
+
+//Route::get('/registro', function () {
+   // return view('login/registro');
+//});
