@@ -68,61 +68,63 @@ class socioController extends Controller
                     'status' => 400,
                     'errores' => $validacion -> errors()
                 ];
-                return response()->json($data,200);
-            }
-
-            $esta_registrado = Socio::usuarioExistente($request->nombre,$request->primer_apellido,$request->segundo_apellido);
-
-            if(!$esta_registrado){
-                $socio = Socio::create([
-                    'nombre_socio' => $request->nombre,
-                    'primer_apellido_socio' => $request->primer_apellido,
-                    'segundo_apellido_socio' => $request->segundo_apellido,
-                    'ci_socio' => $request->ci,
-                    'otb_id' => 1
-                ]);
-            }
-
-            $esta_registrada_cuenta = Usuario::cuentaExistente($request->username);
-
-            if(!$esta_registrada_cuenta){
-
-                $id_usuario = Socio::buscar_id_usuario($request->nombre,$request->primer_apellido,$request->segundo_apellido);
-                $contrasenia_encriptada = Hash::make($request->contrasenia);
-
-                $cuenta = Usuario::create([
-                    'username' => $request->username,
-                    'contrasenia' => $contrasenia_encriptada,
-                    'email' => $request->email,
-                ]);
-
-                $cuenta->socio_id_usuario = $id_usuario;
-                $cuenta->save();
-
-                $data = [
-                    'message' => 'Cuenta creada exitosamente.',
-                    'status' => 201,
-                    'usuario' => $cuenta
-                ];
-                return response()->json($data, 201);
+                return view('index' , ['datos' => $data]);
             }else{
-                $data = [
-                    'message' => 'Usuario y cuenta ya registrados.',
-                    'status' => 200
-                ];
-                return response()->json($data, 200);
+                $esta_registrado = Socio::usuarioExistente($request->nombre,$request->primer_apellido,$request->segundo_apellido);
+
+                if(!$esta_registrado){
+                    $socio = Socio::create([
+                        'nombre_socio' => $request->nombre,
+                        'primer_apellido_socio' => $request->primer_apellido,
+                        'segundo_apellido_socio' => $request->segundo_apellido,
+                        'ci_socio' => $request->ci,
+                        'otb_id' => 1
+                    ]);
+                }
+
+                $esta_registrada_cuenta = Usuario::cuentaExistente($request->username);
+
+                if(!$esta_registrada_cuenta){
+
+                    $id_usuario = Socio::buscar_id_usuario($request->nombre,$request->primer_apellido,$request->segundo_apellido);
+                    $contrasenia_encriptada = Hash::make($request->contrasenia);
+
+                    $cuenta = Usuario::create([
+                        'username' => $request->username,
+                        'contrasenia' => $contrasenia_encriptada,
+                        'email' => $request->email,
+                    ]);
+
+                    $cuenta->socio_id_usuario = $id_usuario;
+                    $cuenta->save();
+
+                    $data = [
+                        'message' => 'Cuenta creada exitosamente.',
+                        'status' => 201,
+                        'usuario' => $cuenta
+                    ];
+                    return view('index', ['datos' => $data]);
+                }else{
+                    $data = [
+                        'message' => 'Usuario y cuenta ya registrados.',
+                        'status' => 200
+                    ];
+                    return view('index', ['datos' => $data]);
+                }
             }
+
+
 
         } catch(\Illuminate\Database\QueryException $e){
-            return response()->json([
+            return view('index', ['datos' =>[
                 'message' => 'Error en la consulta de la base de datos: ' . $e->getMessage(),
                 'status' => 500,
-            ], 500);
+            ]]) ;
         }catch (\Exception $e) {
-            return response()->json([
+            return view('index', ['datos' => [
                 'message' => 'Error al crear el usuario: ' . $e->getMessage(),
                 'status' => 500,
-            ], 500);
+            ]]);
         }
     }
 

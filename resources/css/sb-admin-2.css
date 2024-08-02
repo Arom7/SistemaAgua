@@ -60,6 +60,8 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
 
 body {
   margin: 0;
+  padding: 0;
+  height: 100%;
   font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 1rem;
   font-weight: 400;
@@ -551,11 +553,11 @@ pre code {
 .container-md,
 .container-lg,
 .container-xl {
-  width: 100%;
-  padding-right: 0.75rem;
-  padding-left: 0.75rem;
-  margin-right: auto;
-  margin-left: auto;
+    width: 100%;
+    padding-right: 0.75rem;
+    padding-left: 0.75rem;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 @media (min-width: 576px) {
@@ -2330,6 +2332,15 @@ textarea.form-control {
   .btn {
     transition: none;
   }
+}
+
+.btn-ingreso{
+    color: #EEEEEE;
+    background-color: #134B70;
+}
+
+.btn-busqueda{
+    background-color: #508C9B;
 }
 
 .btn:hover {
@@ -4523,9 +4534,10 @@ input[type="button"].btn-block {
 }
 
 .card-body {
-  flex: 1 1 auto;
+  flex: auto;
   min-height: 1px;
   padding: 1.25rem;
+  background-color: #EEEEEE;
 }
 
 .card-title {
@@ -9797,7 +9809,7 @@ a:focus {
 }
 
 #wrapper #content-wrapper {
-  background-color: #f8f9fc;
+  background-color: #EEEEEE;
   width: 100%;
   overflow-x: hidden;
 }
@@ -9900,8 +9912,8 @@ a:focus {
 }
 
 .bg-gradient-primary {
-  background-color: #4e73df;
-  background-image: linear-gradient(180deg, #4e73df 10%, #224abe 100%);
+  background-color: #134B70;
+  background-image: linear-gradient(180deg, #201E43 10%, #134B70 100%);
   background-size: cover;
 }
 
@@ -10860,11 +10872,13 @@ a:focus {
   }
 }
 
-.bg-login-image {
-  background: url("https://source.unsplash.com/K4mSJ7kc0As/600x800");
-  background-position: center;
-  background-size: cover;
+.bg-login-image{
+    background: url("../images/Agua.jpg");
+    background-position: center;
+    background-size: cover;
+
 }
+
 
 .bg-register-image {
   background: url("https://source.unsplash.com/Mv9hjnEUHR4/600x800");
