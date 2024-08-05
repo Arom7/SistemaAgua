@@ -66,8 +66,8 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Lista de registros:</h6>
-                        <a class="collapse-item" href="buttons.html">Registro de lectura</a>
-                        <a class="collapse-item" href="cards.html">Editar lectura</a>
+                        <a class="collapse-item" href="{{route('registro.lectura')}}">Registro de lectura</a>
+                        <a class="collapse-item" href="{{route('edicion.lectura')}}">Editar lectura</a>
                     </div>
                 </div>
             </li>
@@ -108,8 +108,8 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Vistas Reportes :</h6>
-                        <a class="collapse-item active" href="login.html">Reporte de pagos.</a>
-                        <a class="collapse-item active" href="register.html">Reporte de deudas.</a>
+                        <a class="collapse-item active" href="{{route('reportes.pagos')}}">Reporte de pagos.</a>
+                        <a class="collapse-item active" href="{{route('reportes.deudas')}}">Reporte de deudas.</a>
                         <a class="collapse-item active" href="forgot-password.html">Reporte de multas.</a>
                         <div class="collapse-divider"></div>
                         <h6 class="collapse-header">Otras opciones:</h6>
@@ -238,6 +238,10 @@
 
                     <!-- Page Heading -->
                     <h1 class="h3 mb-4 text-gray-800">Pagina de Inicio</h1>
+
+                    <div class="container">
+                        @yield('content')
+                    </div>
 
                 </div>
                 <!-- /.container-fluid -->

@@ -30,6 +30,27 @@ Route::get('/registro', function(){
     return view('auth.registro');
 })->name('registro.usuario');
 
+// Ruta de redireccion de la seccion de registro de lectura
+Route::get('/lectura-registro',function(){
+    return view('lecturas.registro');
+})->name('registro.lectura');
+
+// Ruta de redireccion de la seccion edicion de registro de lectura
+Route::get('/lectura-edicion',function(){
+    return view('lecturas.edicion');
+})->name('edicion.lectura');
+
+
+// Rutas reportes-deudas
+Route::get('/reportes-deudas', function () {
+    return view('reportes.deudas');
+})->name('reportes.deudas');
+
+// Rutas reportes-pagos
+Route::get('/reportes-pagos', function () {
+    return view('reportes.pagos');
+})->name('reportes.pagos');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
